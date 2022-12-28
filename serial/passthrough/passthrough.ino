@@ -1,13 +1,13 @@
 
+// Software SPI pins, chosen arbitrarily
 // Note: we should use Arduino/mbed SPI capabilities, but there are issues with Serial on Arduino Nano 33 BLE
-
-// Make sure that your Arduino is 3v3!
 #define SO_PIN 2
 #define SI_PIN 3
 #define SC_PIN 4
 
 void setup() {
 
+  // Configure pins
   pinMode(SO_PIN, INPUT);
   pinMode(SI_PIN, OUTPUT);
   pinMode(SC_PIN, OUTPUT);

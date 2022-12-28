@@ -15,6 +15,8 @@ _See [`serial`](./serial/)._
 In this experiment, an Arduino (Nano BLE 33, in this case) is used as a bridge between the computer and the GBA.
 A multiboot-compatible ROM is transmitted over USB; once successfully sent, the cable can be disconnected.
 
+Regardless of the device used to communicate, make sure to use 3.3V!
+
 
 ### Link cable
 
@@ -94,6 +96,20 @@ make
 ```
 
 For convenience, [`rom.mb`](./serial/rom.mb) is already compiled, and feature a minimalistic demo, where a white pixel is moved across the screen.
+
+
+## Upload multiboot from embedded device
+
+_See [`loader`](./loader/)._
+
+In this experiment, the Arduino is only connected to the GBA (i.e. it uses VCC from the Link cable).
+The multiboot ROM is stored in the flash memory, with the upload code.
+
+The ROM can be converted into a C file using:
+
+```
+python convert.py ../serial/rom.mb loader/rom.h
+```
 
 
 ## References

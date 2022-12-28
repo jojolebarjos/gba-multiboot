@@ -154,7 +154,7 @@ with serial.Serial(args.port_name) as port:
         r = xfer32(yyyyyyyy)
 
         # Client replies with lower bits of destination address
-        assert r >> 16 == i & 0xffff, r
+        assert r >> 16 == i & 0xffff
 
     # Final checksum update
     c ^= f
