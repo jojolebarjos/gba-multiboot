@@ -13,9 +13,14 @@ As the game resides in RAM, this is limited to 256Ko.
 _See [`serial`](./serial/)._
 
 In this experiment, an Arduino (Nano BLE 33, in this case) is used as a bridge between the computer and the GBA.
-The Link cable, in Normal mode, is a typical [Serial Peripheral Interface (SPI)](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface), at 9600 bauds, 8-bits, no parity bit, one stop bit.
+A multiboot-compatible ROM is transmitted over USB; once successfully sent, the cable can be disconnected.
 
-The Link cable male connector (when looking at the connector) has the following pins:
+
+### Link cable
+
+The Link cable, in Normal mode, is a typical [Serial Peripheral Interface (SPI)](https://en.wikipedia.org/wiki/Serial_Peripheral_Interface), at 9600 bauds, 8-bits, no parity bit, one stop bit.
+Wire colors are not universal, and may differ from other cables.
+Its male connector (when looking at the connector) has the following pins:
 
 ```
         ___
@@ -44,7 +49,17 @@ Connection is made in Normal mode (i.e. 32 bits), pins are connected as followin
  5. SC - SCLK
  6. GND - GND
 
-Once the [`passthrough.ino`](./serial/passthrough/passthrough.ino) sketch is installed, [`upload.py`](./serial/upload.py) can be used to upload the ROM:
+The [`passthrough.ino`](./serial/passthrough/passthrough.ino) sketch will exchange 32-bits payloads over USB with the GBA.
+
+
+### Multiboot protocol
+
+When powered up without any cartridge, the slave GBA will wait for instruction from the Link cable, from another device, the master GBA.
+There are two modes, Normal and MultiPlay, depending on how many devices need to be connected; for a two devices scenario, the Normal mode can is faster.
+The slave will automatically detect which mode is used by the master.
+
+The protocol is implemented in [`upload.py`](./serial/upload.py), which can be used to upload a ROM file.
+See [this documentation](https://www.problemkaputt.de/gbatek.htm#biosmultibootsinglegamepak) for more details.
 
 ```
 python upload.py rom.mb COM3
@@ -55,6 +70,30 @@ A few examples:
 
  * [Vitamins](https://pineight.com/gba/#drm), an homebrew game by Damian Yerrick;
  * ...
+
+
+### Compile multiboot ROM
+
+The GameBoy Advance features an ARM-based processor.
+We will use [devkitPro](https://devkitpro.org/wiki/Main_Page) to compile binaries.
+
+The most straightforward approach is to use the [Docker image](https://github.com/devkitPro/docker).
+We share the local folder with the container, to avoid unnecessary copies.
+
+```
+# Run in interactive mode
+docker run -ti -v ${PWD}:/rom devkitpro/devkitarm
+# On Windows: docker run -ti -v %cd%:/rom devkitpro/devkitarm
+
+# Add compiler binaries to path
+export PATH="/opt/devkitpro/devkitARM/bin/:$PATH"
+
+# Go to shared folder and build files
+cd /rom/
+make
+```
+
+For convenience, [`rom.mb`](./serial/rom.mb) is already compiled, and feature a minimalistic demo, where a white pixel is moved across the screen.
 
 
 ## References

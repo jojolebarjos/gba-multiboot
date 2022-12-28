@@ -1,0 +1,6 @@
+*.elf
+*.elf.map
+*.d
+*.o
+*.gba
+*.mb
