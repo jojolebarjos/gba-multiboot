@@ -100,7 +100,7 @@ For convenience, [`rom.mb`](./serial/rom.mb) is already compiled, and feature a 
 
 ## Upload multiboot from embedded device
 
-_See [`loader`](./loader/)._
+_See [`embedded`](./embedded/)._
 
 In this experiment, the Arduino is only connected to the GBA (i.e. it uses VCC from the Link cable).
 The multiboot ROM is stored in the flash memory, with the upload code.
