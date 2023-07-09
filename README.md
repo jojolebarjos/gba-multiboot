@@ -73,6 +73,8 @@ A few examples:
  * [Vitamins](https://pineight.com/gba/#drm), an homebrew game by Damian Yerrick;
  * ...
 
+<img src="image/wario.jpg" width="800" height="600" alt="Existing multiboot ROM">
+
 
 ### Compile multiboot ROM
 
@@ -97,6 +99,8 @@ make
 
 For convenience, [`rom.mb`](./serial/rom.mb) is already compiled, and feature a minimalistic demo, where a white pixel is moved across the screen.
 
+<img src="image/pixel.jpg" width="800" height="600" alt="Custom multiboot ROM">
+
 
 ## Upload multiboot from embedded device
 
@@ -110,6 +114,8 @@ The ROM can be converted into a C file using:
 ```
 python convert.py ../serial/rom.mb loader/rom.h
 ```
+
+<img src="image/embedded.jpg" width="800" height="600" alt="Embedded multiboot ROM">
 
 
 ## References
